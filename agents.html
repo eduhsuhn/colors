@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valorant Agent Colors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #fff;
+            --card-border: rgba(0,0,0,0.1);
+            --hover-bg: #e0e0e0;
+            --code-bg: #f5f5f5;
+            --tips-bg: #f8f9fa;
+            --secondary-text: #666;
+            --transition-time: 0.3s;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #fff;
+            --card-bg: #2d2d2d;
+            --card-border: rgba(255,255,255,0.1);
+            --hover-bg: #3d3d3d;
+            --code-bg: #363636;
+            --tips-bg: #2d2d2d;
+            --secondary-text: #aaa;
+        }
+
+        * {
+            transition: background-color var(--transition-time), color var(--transition-time), border-color var(--transition-time), box-shadow var(--transition-time);
+        }
+
+        body {
+            font-family: "Exo 2", sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 24px;
+            padding: 10px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .theme-switch:hover {
+            background-color: var(--hover-bg);
+            transform: rotate(15deg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .agent-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .agent-item {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--card-border);
+            gap: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .agent-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--card-border);
+        }
+
+        .agent-image {
+            height: 75px;
+            width: auto;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-radius: 4px;
+        }
+
+        .agent-image:hover {
+            transform: scale(1.05);
+        }
+
+        .button-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            height: 75px;
+            margin-left: 8px;
+            align-items: center;
+        }
+
+        .download-button {
+            flex: 1;
+            padding: 0;
+            background: none;
+            color: var(--text-color);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .download-button i {
+            font-size: 20px;
+        }
+
+        .download-button:hover {
+            color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .color-swatch {
+            flex: 1;
+            width: 36px;
+            border-radius: 8px;
+            border: 2px solid var(--card-border);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .color-swatch input[type="color"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            border: none;
+            -webkit-appearance: none;
+        }
+
+        .color-swatch input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .color-swatch input[type="color"]::-webkit-color-swatch {
+            border: none;
+        }
+
+        .color-swatch input[type="color"]::-moz-color-swatch {
+            border: none;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.05);
+            border-color: #999;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .color-swatch:hover::after {
+            content: '\f53f';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+
+        .agent-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: auto;
+            gap: 4px;
+        }
+
+        .agent-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .agent-name i {
+            font-size: 16px;
+            color: var(--secondary-text);
+        }
+
+        .color-code {
+            font-family: "Exo 2", monospace;
+            font-size: 16px;
+            font-weight: 500;
+            background-color: var(--code-bg);
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-color);
+        }
+
+        .color-code:hover {
+            background-color: var(--hover-bg);
+            transform: translateY(-2px);
+        }
+
+        .color-code i {
+            font-size: 14px;
+            color: var(--secondary-text);
+        }
+
+        .button-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .save-button, .revert-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: "Exo 2", sans-serif;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 16px;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .save-button i, .revert-button i {
+            font-size: 16px;
+        }
+
+        .save-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .save-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .revert-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .revert-button:hover {
+            background-color: #da190b;
+            transform: translateY(-2px);
+        }
+
+        .tooltip {
+            position: fixed;
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+            font-family: "Exo 2", sans-serif;
+            border: 1px solid var(--card-border);
+        }
+
+        .tips-container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--tips-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--card-border);
+        }
+
+        .tips-container h2 {
+            font-family: "Exo 2", sans-serif;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 16px;
+            font-size: 24px;
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .tips-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-family: "Exo 2", sans-serif;
+            color: var(--secondary-text);
+        }
+
+        .tips-list i {
+            color: #007bff;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .agent-list {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+                padding: 10px;
+            }
+            .agent-item {
+                padding: 10px;
+            }
+            .agent-image {
+                height: 60px;
+            }
+            .button-stack {
+                height: 60px;
+            }
+            .download-button {
+                width: 29px;
+                font-size: 24px;
+            }
+            .color-swatch {
+                width: 29px;
+            }
+            .color-swatch:hover::after {
+                font-size: 16px;
+            }
+            .agent-name {
+                font-size: 16px;
+            }
+            .color-code {
+                font-size: 14px;
+            }
+            .button-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-switch" aria-label="Toggle theme">
+        <i class="fas fa-sun"></i>
+    </button>
+    <h1>Valorant Agent Colors</h1>
+    <div class="button-container">
+        <button class="save-button" onclick="saveColors()">
+            <i class="fas fa-save"></i>
+            Save Colors
+        </button>
+        <button class="revert-button" onclick="revertColors()">
+            <i class="fas fa-undo"></i>
+            Revert All
+        </button>
+    </div>
+    <div class="agent-list">
+        <div class="agent-item">
+            <img src="https://i.imgur.com/1oSjpCt.png" alt="Astra" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #9E65BD">
+                    <input type="color" value="#9E65BD">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/1oSjpCt.png', 'astra.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    ASTRA
+                    <i class="fas fa-user-astronaut"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #9E65BD
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/SyBvuGI.png" alt="Breach" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #F6E700">
+                    <input type="color" value="#F6E700">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/SyBvuGI.png', 'breach.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    BREACH
+                    <i class="fas fa-user-secret"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #F6E700
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/BYpmJJj.png" alt="Brimstone" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #E05900">
+                    <input type="color" value="#E05900">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/BYpmJJj.png', 'brimstone.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    BRIMSTONE
+                    <i class="fas fa-fire"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #E05900
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/lKBUFNM.png" alt="Chamber" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #F99800">
+                    <input type="color" value="#F99800">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/lKBUFNM.png', 'chamber.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    CHAMBER
+                    <i class="fas fa-user-tie"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #F99800
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/22TGXqt.png" alt="Cypher" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #8F95A1">
+                    <input type="color" value="#8F95A1">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/22TGXqt.png', 'cypher.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    CYPHER
+                    <i class="fas fa-lock"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #8F95A1
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/ks0J4xE.png" alt="Deadlock" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #00BBE2">
+                    <input type="color" value="#00BBE2">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/ks0J4xE.png', 'deadlock.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    DEADLOCK
+                    <i class="fas fa-skull-crossbones"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #00BBE2
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/up5EfwN.png" alt="Fade" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #5A5C58">
+                    <input type="color" value="#5A5C58">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/up5EfwN.png', 'fade.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    FADE
+                    <i class="fas fa-ghost"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #5A5C58
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/lciX4QR.png" alt="Gekko" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #B1D600">
+                    <input type="color" value="#B1D600">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/lciX4QR.png', 'gekko.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    GEKKO
+                    <i class="fas fa-frog"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #B1D600
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/59JXKr1.png" alt="Harbor" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #498A82">
+                    <input type="color" value="#498A82">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/59JXKr1.png', 'harbor.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    HARBOR
+                    <i class="fas fa-anchor"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #498A82
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/tBFGJ0z.png" alt="Iso" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #2100A8">
+                    <input type="color" value="#2100A8">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/tBFGJ0z.png', 'iso.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    ISO
+                    <i class="fas fa-robot"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #2100A8
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/Oz98f4n.png" alt="Jett" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #CCCCFF">
+                    <input type="color" value="#CCCCFF">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/Oz98f4n.png', 'jett.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    JETT
+                    <i class="fas fa-female"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #CCCCFF
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/xW75wzX.png" alt="Kayo" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #8852CA">
+                    <input type="color" value="#8852CA">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/xW75wzX.png', 'kayo.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    KAYO
+                    <i class="fas fa-robot"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #8852CA
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/8Hu020i.png" alt="Killjoy" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #FFFF29">
+                    <input type="color" value="#FFFF29">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/8Hu020i.png', 'killjoy.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    KILLJOY
+                    <i class="fas fa-robot"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #FFFF29
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/aMOqKy4.png" alt="Neon" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #0075E3">
+                    <input type="color" value="#0075E3">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/aMOqKy4.png', 'neon.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    NEON
+                    <i class="fas fa-bolt"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #0075E3
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/arhLKa3.png" alt="Omen" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #7F93D8">
+                    <input type="color" value="#7F93D8">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/arhLKa3.png', 'omen.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    OMEN
+                    <i class="fas fa-skull-crossbones"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #7F93D8
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/hTDCqX6.png" alt="Phoenix" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #FF3636">
+                    <input type="color" value="#FF3636">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/hTDCqX6.png', 'phoenix.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    PHOENIX
+                    <i class="fas fa-fire"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #FF3636
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/dYBqBkJ.png" alt="Raze" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #E06B00">
+                    <input type="color" value="#E06B00">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/dYBqBkJ.png', 'raze.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    RAZE
+                    <i class="fas fa-bomb"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #E06B00
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/oo8JQAY.png" alt="Reyna" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #F638C8">
+                    <input type="color" value="#F638C8">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/oo8JQAY.png', 'reyna.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    REYNA
+                    <i class="fas fa-female"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #F638C8
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/TQKYOLB.png" alt="Sage" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #54CEB8">
+                    <input type="color" value="#54CEB8">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/TQKYOLB.png', 'sage.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    SAGE
+                    <i class="fas fa-leaf"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #54CEB8
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/ILS8cww.png" alt="Skye" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #89D115">
+                    <input type="color" value="#89D115">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/ILS8cww.png', 'skye.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    SKYE
+                    <i class="fas fa-dog"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #89D115
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/xKqrjbp.png" alt="Sova" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #0660B4">
+                    <input type="color" value="#0660B4">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/xKqrjbp.png', 'sova.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    SOVA
+                    <i class="fas fa-binoculars"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #0660B4
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/3vqHGIj.png" alt="Tejo" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #DF9100">
+                    <input type="color" value="#DF9100">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/3vqHGIj.png', 'tejo.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    TEJO
+                    <i class="fas fa-fire"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #DF9100
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/tPtACh2.png" alt="Viper" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #20FC03">
+                    <input type="color" value="#20FC03">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/tPtACh2.png', 'viper.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    VIPER
+                    <i class="fas fa-snake"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #20FC03
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/5UpzyJu.png" alt="Vyse" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #6536FF">
+                    <input type="color" value="#6536FF">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/5UpzyJu.png', 'vyse.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    VYSE
+                    <i class="fas fa-user-secret"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #6536FF
+                </span>
+            </div>
+        </div>
+        <div class="agent-item">
+            <img src="https://i.imgur.com/fsKcbl1.png" alt="Yoru" class="agent-image" onclick="copyImageUrl(this.src)">
+            <div class="button-stack">
+                <div class="color-swatch" style="background-color: #0030AC">
+                    <input type="color" value="#0030AC">
+                </div>
+                <button class="download-button" onclick="downloadImage('https://i.imgur.com/fsKcbl1.png', 'yoru.png')">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            <div class="agent-info">
+                <span class="agent-name">
+                    YORU
+                    <i class="fas fa-moon"></i>
+                </span>
+                <span class="color-code">
+                    <i class="fas fa-palette"></i>
+                    #0030AC
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="tips-container">
+        <h2>How to Use</h2>
+        <ul class="tips-list">
+            <li>
+                <i class="fas fa-palette"></i>
+                <span>Click on the color swatch to pick a custom color for any agent</span>
+            </li>
+            <li>
+                <i class="fas fa-download"></i>
+                <span>Use the download button to save agent images locally</span>
+            </li>
+            <li>
+                <i class="fas fa-copy"></i>
+                <span>Click on an agent's image to copy its URL</span>
+            </li>
+            <li>
+                <i class="fas fa-hashtag"></i>
+                <span>Click on the hex code to copy the color value</span>
+            </li>
+            <li>
+                <i class="fas fa-save"></i>
+                <span>Use the Save button to store your custom colors</span>
+            </li>
+            <li>
+                <i class="fas fa-undo"></i>
+                <span>Click Revert to restore original colors</span>
+            </li>
+        </ul>
+    </div>
+    <div class="tooltip">Copied!</div>
+
+    <script>
+        // Store default colors
+        const defaultColors = {
+            'ASTRA': '#9E65BD',
+            'BREACH': '#F6E700',
+            'BRIMSTONE': '#E05900',
+            'CHAMBER': '#F99800',
+            'CYPHER': '#8F95A1',
+            'DEADLOCK': '#00BBE2',
+            'FADE': '#5A5C58',
+            'GEKKO': '#B1D600',
+            'HARBOR': '#498A82',
+            'ISO': '#2100A8',
+            'JETT': '#CCCCFF',
+            'KAYO': '#8852CA',
+            'KILLJOY': '#FFFF29',
+            'NEON': '#0075E3',
+            'OMEN': '#7F93D8',
+            'PHOENIX': '#FF3636',
+            'RAZE': '#E06B00',
+            'REYNA': '#F638C8',
+            'SAGE': '#54CEB8',
+            'SKYE': '#89D115',
+            'SOVA': '#0660B4',
+            'TEJO': '#DF9100',
+            'VIPER': '#20FC03',
+            'VYSE': '#6536FF',
+            'YORU': '#0030AC'
+        };
+
+        // Function to save current colors to localStorage
+        function saveColors() {
+            const currentColors = {};
+            document.querySelectorAll('.agent-item').forEach(item => {
+                const agentName = item.querySelector('.agent-name').textContent.trim();
+                const colorInput = item.querySelector('input[type="color"]');
+                // Store the hex value directly from the color input
+                currentColors[agentName] = colorInput.value.toUpperCase();
+            });
+
+            localStorage.setItem('savedColors', JSON.stringify(currentColors));
+            showTooltip('Colors saved successfully');
+        }
+
+        // Function to revert to default colors
+        function revertColors() {
+            document.querySelectorAll('.agent-item').forEach(item => {
+                const agentName = item.querySelector('.agent-name').textContent.trim();
+                const defaultColor = defaultColors[agentName];
+                
+                // Update color swatch background and input value
+                const colorSwatch = item.querySelector('.color-swatch');
+                const colorInput = colorSwatch.querySelector('input[type="color"]');
+                colorSwatch.style.backgroundColor = defaultColor;
+                colorInput.value = defaultColor;
+                
+                // Update hex code display
+                const colorCode = item.querySelector('.color-code');
+                const hexText = colorCode.lastChild;
+                hexText.textContent = defaultColor.toUpperCase();
+            });
+
+            // Clear localStorage
+            localStorage.removeItem('savedColors');
+            
+            // Show success message
+            showTooltip('Colors reverted to default');
+        }
+
+        // Function to update color
+        function updateColor(colorSwatch, newColor) {
+            const agentItem = colorSwatch.closest('.agent-item');
+            const colorInput = colorSwatch.querySelector('input[type="color"]');
+            const colorCode = agentItem.querySelector('.color-code');
+            const hexText = colorCode.lastChild;
+            
+            // Convert RGB to Hex if necessary
+            let hexColor = newColor;
+            if (newColor.startsWith('rgb')) {
+                hexColor = rgbToHex(newColor);
+            }
+            
+            colorSwatch.style.backgroundColor = hexColor;
+            colorInput.value = hexColor;
+            hexText.textContent = hexColor.toUpperCase();
+        }
+
+        // Helper function to convert RGB to Hex
+        function rgbToHex(rgb) {
+            // If already hex, return as is
+            if (rgb.startsWith('#')) return rgb;
+            
+            // Parse RGB values
+            const rgbValues = rgb.match(/\d+/g);
+            if (!rgbValues) return '#000000';
+            
+            const r = parseInt(rgbValues[0]);
+            const g = parseInt(rgbValues[1]);
+            const b = parseInt(rgbValues[2]);
+            
+            // Convert to hex
+            const toHex = (n) => {
+                const hex = n.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            };
+            
+            return '#' + toHex(r) + toHex(g) + toHex(b);
+        }
+
+        // Initialize color inputs
+        document.querySelectorAll('input[type="color"]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const colorSwatch = e.target.closest('.color-swatch');
+                updateColor(colorSwatch, e.target.value);
+            });
+        });
+
+        // Load saved colors on page load
+        window.addEventListener('load', () => {
+            const savedColors = localStorage.getItem('savedColors');
+            if (savedColors) {
+                const colors = JSON.parse(savedColors);
+                document.querySelectorAll('.agent-item').forEach(item => {
+                    const agentName = item.querySelector('.agent-name').textContent.trim();
+                    const savedColor = colors[agentName];
+                    if (savedColor) {
+                        const colorSwatch = item.querySelector('.color-swatch');
+                        updateColor(colorSwatch, savedColor);
+                    }
+                });
+            }
+        });
+
+        // Add copy to clipboard functionality
+        const tooltip = document.querySelector('.tooltip');
+        document.querySelectorAll('.color-code').forEach(code => {
+            code.addEventListener('click', async (e) => {
+                const color = e.target.textContent;
+                try {
+                    await navigator.clipboard.writeText(color);
+                    
+                    // Show tooltip
+                    tooltip.textContent = 'Copied!';
+                    tooltip.style.opacity = '1';
+                    tooltip.style.left = (e.pageX + 10) + 'px';
+                    tooltip.style.top = (e.pageY + 10) + 'px';
+                    tooltip.style.transform = 'none';
+                    
+                    // Hide tooltip after 1.5 seconds
+                    setTimeout(() => {
+                        tooltip.style.opacity = '0';
+                    }, 1500);
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            });
+        });
+
+        function copyImageUrl(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                showTooltip('Image URL copied!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                showTooltip('Failed to copy URL');
+            });
+        }
+
+        function downloadImage(url, filename) {
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                })
+                .catch(err => {
+                    console.error('Failed to download:', err);
+                    showTooltip('Failed to download image');
+                });
+        }
+
+        function showTooltip(message) {
+            const tooltip = document.querySelector('.tooltip');
+            tooltip.textContent = message;
+            tooltip.style.opacity = '1';
+            tooltip.style.left = '50%';
+            tooltip.style.top = '100px';
+            tooltip.style.transform = 'translateX(-50%)';
+            
+            setTimeout(() => {
+                tooltip.style.opacity = '0';
+            }, 1500);
+        }
+
+        // Add tooltips for buttons and interactive elements
+        function addTooltip(element, text) {
+            element.addEventListener('mouseenter', (e) => {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip';
+                tooltip.textContent = text;
+                document.body.appendChild(tooltip);
+                
+                const rect = element.getBoundingClientRect();
+                tooltip.style.left = rect.left + (rect.width - tooltip.offsetWidth) / 2 + 'px';
+                tooltip.style.top = rect.bottom + 8 + 'px';
+                
+                setTimeout(() => tooltip.style.opacity = '1', 0);
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                const tooltips = document.querySelectorAll('.tooltip');
+                tooltips.forEach(t => {
+                    t.style.opacity = '0';
+                    setTimeout(() => t.remove(), 200);
+                });
+            });
+        }
+
+        // Add tooltips to all interactive elements
+        document.querySelectorAll('.download-button').forEach(btn => {
+            addTooltip(btn, 'Download agent image');
+        });
+
+        document.querySelectorAll('.color-swatch').forEach(swatch => {
+            addTooltip(swatch, 'Click to change agent color');
+        });
+
+        document.querySelectorAll('.agent-image').forEach(img => {
+            addTooltip(img, 'Click to copy image URL');
+        });
+
+        document.querySelectorAll('.color-code').forEach(code => {
+            addTooltip(code, 'Click to copy color code');
+        });
+
+        document.querySelector('.save-button').addEventListener('click', saveColors);
+        document.querySelector('.revert-button').addEventListener('click', revertColors);
+        
+        addTooltip(document.querySelector('.save-button'), 'Save current color settings');
+        addTooltip(document.querySelector('.revert-button'), 'Restore original colors');
+
+        // Theme switching functionality
+        const themeToggle = document.querySelector('.theme-switch');
+        const html = document.documentElement;
+        const themeIcon = themeToggle.querySelector('i');
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Initialize theme icon
+        updateThemeIcon(savedTheme);
+    </script>
+</body>
+</html>
